@@ -1,0 +1,138 @@
+body{
+  background: url(../img/fondo5.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.container-main{
+    background-color: rgba(243, 229, 54, 0.2);
+}
+
+.encabezado{
+  border-bottom: 2px solid black;
+}
+
+.barra-izq{
+  border-right: 2px solid black;
+  padding-top: 5vh;
+  padding-right: 3vh;
+  padding-left: 3vh;
+}
+
+.container-barra-izq{
+  background-color: rgba(250, 233, 17, 0.4);
+  padding: 10px;
+  margin: -10px;
+  border-radius: 0.7vw 0.7vw 0.7vw 0.7vw;
+}
+
+.favoritos{
+  margin-top: 10px;
+}
+
+.favoritos img{
+  padding: 2px;
+  width: 100%;
+}
+
+.historial{
+  margin-top: 10px;
+}
+
+.publicacion{
+  background-color: rgba(255, 249, 178, 0.9);
+  padding-top: 2vh;
+  padding-right: 3vh;
+  padding-left: 3vh;
+  padding-bottom: 2vh;
+  margin: 1.8vw;
+  border-radius: 0.7vw 0.7vw 0.7vw 0.7vw;
+
+}
+
+.publicacion h1{
+  font-family: cursive;
+  padding-left: 2.5vw;
+}
+
+.publicacion time{
+  font-family: cursive;
+  padding-left: 2.5vw;
+}
+
+.publicacion img{
+  width: 90%;
+  margin-left: 2.5vw;
+  border-radius: 0.7vw 0.7vw 0.7vw 0.7vw;
+
+}
+
+.publicacion p{
+  margin: 1vw;
+}
+
+.caja-logo{
+  border-right: 2px solid black;
+}
+
+
+.caja-texto input{
+  border-radius: 0 0.7vw 0.7vw 0;
+}
+
+.buscar{
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-flex-flow: row-reverse nowrap;
+      -ms-flex-flow: row-reverse nowrap;
+          flex-flow: row-reverse nowrap;
+
+}
+
+.boton{
+  border-radius: 0.7vw 0 0 0.7vw;
+}
+
+.boton-class{
+  text-align: center;
+}
+
+.area{
+  border-radius: 0 0.7vw 0.7vw 0;
+
+}
+
+.comment-wrapper{
+  width: 100%;
+  padding: 2vw;
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-flex-flow: row-reverse nowrap;
+      -ms-flex-flow: row-reverse nowrap;
+          flex-flow: row-reverse nowrap;
+
+
+}
+
+.comment-wrapper img {
+  width: 5vw;
+}
+
+.comment{
+  background-color: rgba(250, 238, 89, 0.5);
+  width: 90%;
+  text-align: center;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  margin-bottom: 2vw !important;
+  padding: 1vw;
+  border-radius: 0.7vw 0.7vw 0.7vw 0.7vw;
+}
