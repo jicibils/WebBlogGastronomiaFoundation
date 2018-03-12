@@ -10,6 +10,10 @@ body{
 
 .container-main{
     background-color: rgba(243, 229, 54, 0.2);
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+
 }
 
 .encabezado{
@@ -57,6 +61,7 @@ body{
 .publicacion h1{
   font-family: cursive;
   padding-left: 2.5vw;
+  word-wrap: break-word;
 }
 
 .publicacion time{
@@ -73,6 +78,7 @@ body{
 
 .publicacion p{
   margin: 1vw;
+  word-wrap: break-word;
 }
 
 .caja-logo{
@@ -105,12 +111,14 @@ body{
 
 .area{
   border-radius: 0 0.7vw 0.7vw 0;
+  word-wrap: break-word;
 
 }
 
 .comment-wrapper{
   width: 100%;
   padding: 2vw;
+  word-wrap: break-word;
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
@@ -135,4 +143,55 @@ body{
   margin-bottom: 2vw !important;
   padding: 1vw;
   border-radius: 0.7vw 0.7vw 0.7vw 0.7vw;
+  word-wrap: break-word;
+}
+
+.nuevaPublicacion{
+  width: 100%;
+  word-wrap: break-word;
+}
+
+.nuevaPublicacion .boton-class .button{
+  width: 100% ;
+  margin-top: 3vh;
+  margin-left: 0.6vw;
+}
+
+/****************************************************************/
+                /*       nuevaPublicacion        */
+
+.container-nueva-publicacion{
+    background-color: rgba(243, 229, 54, 0.2);
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    word-wrap: break-word;
+
+}
+
+.contenedorPubli{
+  margin-left: auto;
+  margin-right: auto;
+  word-wrap: break-word;
+
+}
+
+.container-titulo label{
+  font-size: 40px;
+  font-style: italic;
+  word-wrap: break-word;
+}
+
+#titulo{
+  border-radius: 0.7vw 0.7vw 0.7vw 0.7vw;
+}
+
+#fecha{
+  border-radius: 0.7vw 0.7vw 0.7vw 0.7vw;
+}
+
+.descrNuevaPubli{
+  border-radius: 0.7vw 0.7vw 0.7vw 0.7vw;
+  word-wrap: break-word;
+
 }
