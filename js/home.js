@@ -8,6 +8,241 @@ var f = new Date();
 // document.write(f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear());
 document.getElementById('fecha').value = f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear()
 
+
+// **************************************************************************
+// *****************************PUBLICACIONES**********************************
+// **************************************************************************
+
+function mostrarDatosPublicaciones() {
+  var resultado="publicaciones: "+localStorage.getItem("publicacion");
+
+  console.log(resultado);
+}
+
+function crearPublicacionGuardada(publicacion) {
+  var titulo = publicacion.tituloPubli
+  var fecha = publicacion.fecha
+  var descripcion = publicacion.descripcion
+  var foto = publicacion.foto
+
+  //creamos un div que contenga la nueva lista
+  var publicacionNueva=document.createElement("div")
+  //le agregamos un className al div creado
+  publicacionNueva.className="row columns publicacion"
+  publicacionNueva.id=titulo
+  //lo añadimos al contenedor
+  document.getElementById("container-publicaciones").appendChild(publicacionNueva)
+  //creamos un titulo
+  var tituloNuevo=document.createElement("h1")
+  tituloNuevo.innerHTML = titulo
+  //creamos una fecha
+  var fechaNueva=document.createElement("time")
+  fechaNueva.innerHTML = fecha
+
+  // Insertamos la imagen
+  var imgNueva=document.createElement("img")
+  imgNueva.setAttribute("src",foto)
+
+  //creamos un salto en blanco
+  var saltoEnBlanco = document.createElement("br")
+
+  //creamos una descripcion
+  var descripcionNueva=document.createElement("p")
+  descripcionNueva.innerHTML = descripcion
+
+  //los añadimos al nuevo div
+  publicacionNueva.appendChild(tituloNuevo)
+  publicacionNueva.appendChild(fechaNueva)
+  publicacionNueva.appendChild(imgNueva)
+  publicacionNueva.appendChild(saltoEnBlanco)
+  publicacionNueva.appendChild(descripcionNueva)
+
+// hasta aca se agrego el titulo,fecha,foto,descripcion
+//ahora vamos a añadir el textArea para que puedan hacer comentarios
+
+
+  var contenedorEscribirComentarios=document.createElement("div")
+  contenedorEscribirComentarios.className="row columns"
+  var escribirComentarios=document.createElement("div")
+  escribirComentarios.className="row columns"
+  var commentWrapper=document.createElement("div")
+  commentWrapper.className="comment-wrapper"
+  var textArea=document.createElement("textarea")
+  textArea.className="area"
+  textArea.id="txtComment"
+  textArea.placeholder="Escriba un Comentario"
+  var btnTextArea=document.createElement("a")
+  btnTextArea.href="#"
+  btnTextArea.className="button alert boton "
+  var iconoTextArea=document.createElement("i")
+  iconoTextArea.className="step fi-torso"
+  var contenedorBotonPublicar=document.createElement("div")
+  contenedorBotonPublicar.className="row columns boton-class"
+  var btnPublicarComment=document.createElement("a")
+  btnPublicarComment.href="#"
+  btnPublicarComment.className="button alert "
+  btnPublicarComment.id="btnPublicarComment"
+  btnPublicarComment.onclick=function(){agregarComentario()};
+
+  btnPublicarComment.innerHTML=" Publicar"
+  var iconoBtnPublicar=document.createElement("i")
+  iconoBtnPublicar.className="step fi-pencil"
+
+  var contenedorComentarios = document.createElement("div")
+  contenedorComentarios.className = "row columns contenedorComentarios"
+  contenedorComentarios.id = "contenedorComentarios"
+
+  btnTextArea.appendChild(iconoTextArea)
+
+  commentWrapper.appendChild(textArea)
+  commentWrapper.appendChild(btnTextArea)
+
+  escribirComentarios.appendChild(commentWrapper)
+
+  btnPublicarComment.appendChild(iconoBtnPublicar)
+  contenedorBotonPublicar.appendChild(btnPublicarComment)
+
+  contenedorEscribirComentarios.appendChild(escribirComentarios)
+  contenedorEscribirComentarios.appendChild(contenedorBotonPublicar)
+
+  publicacionNueva.appendChild(contenedorEscribirComentarios)
+  publicacionNueva.appendChild(contenedorComentarios)
+  console.log("publicacion Recuperada");
+
+
+}
+
+function guardarPublicaciones(titulo,fecha,foto,descripcion) {
+  // Guardamos las publicaciones en la base de datos del navegador
+  this.objPublicacionesGuardadas = []
+  // Guardamos la publicacion
+  objPublicacion = {
+    "tituloPubli" : titulo,
+    "fecha" : fecha,
+    "foto" : foto,
+    "descripcion" : descripcion
+  }
+  objPublicacion.tituloPubli = titulo
+  objPublicacion.fecha = fecha
+  objPublicacion.foto = foto
+  objPublicacion.descripcion = descripcion
+
+
+  if (localStorage.publicacion) {
+    var publicacionString = localStorage.getItem('publicacion')
+    var publicaciones = JSON.parse(publicacionString)
+    this.objPublicacionesGuardadas = publicaciones
+  }
+
+  this.objPublicacionesGuardadas.push(objPublicacion)
+  localStorage.setItem("publicacion", JSON.stringify(this.objPublicacionesGuardadas));
+  mostrarDatosPublicaciones()
+}
+
+function cargarPublicaciones() {
+  // Cuando cargamos la pagina, si las variables tienen valor, lo ponemos
+  // en el formulario
+  if(localStorage.publicacion){
+    var publicacionString = localStorage.getItem('publicacion')
+    var publicaciones = JSON.parse(publicacionString)
+
+    for (var i = 0; i < publicaciones.length; i++) {
+      crearPublicacionGuardada(publicaciones[i])
+    }
+  }
+  cargarComentarios();
+}
+
+// **************************************************************************
+// *****************************COMENTARIOS**********************************
+// **************************************************************************
+
+function mostrarDatosComentarios() {
+  var resultado="comentario: "+localStorage.getItem("comentario");
+
+  console.log(resultado);
+}
+
+function crearComentarioGuardado(indicePubli,publicacion,tituloCom,comment) {
+
+  var contenedorComentario = document.getElementsByClassName('contenedorComentarios')[indicePubli]
+  var estructuraComentario = document.createElement("div")
+  estructuraComentario.className="row columns comment"
+  contenedorComentario.appendChild(estructuraComentario)
+
+  var filaComentario = document.createElement("div")
+  filaComentario.className="row"
+
+  var iconoComentario = document.createElement("div")
+  iconoComentario.className="large-2 medium-2 small-2 columns;"
+
+  var imgIcono=document.createElement("img")
+  imgIcono.setAttribute("src","img/hombre.png")
+
+  var contenedorContenidoComentario = document.createElement("div")
+  contenedorContenidoComentario.className="large-10 medium-10 small-10 columns align-self-middle"
+  contenedorContenidoComentario.style="word-wrap: break-word;"
+  var contenidoComentario = document.createElement("p")
+  contenidoComentario.innerHTML="<strong>Usuario: </strong>"+comment
+
+  contenedorContenidoComentario.appendChild(contenidoComentario)
+  iconoComentario.appendChild(imgIcono)
+  filaComentario.appendChild(iconoComentario)
+  filaComentario.appendChild(contenedorContenidoComentario)
+  estructuraComentario.appendChild(filaComentario)
+  console.log("Comentario Recuperado");
+
+
+}
+
+
+function guardarComentarios(comentario,publicacion,titulo) {
+  this.objCommentGuardados = []
+  // Guardamos el comentario
+  objComment = {
+    "tituloPubli" : titulo,
+    "publicacion" : publicacion,
+    "comentario" : comentario
+  }
+  objComment.tituloPubli = titulo
+  objComment.publicacion = publicacion
+  objComment.comentario = comentario
+
+
+  if (localStorage.comentario) {
+    var comentarioString = localStorage.getItem('comentario')
+    var comentarios = JSON.parse(comentarioString)
+    this.objCommentGuardados = comentarios
+  }
+
+  this.objCommentGuardados.push(objComment)
+  localStorage.setItem("comentario", JSON.stringify(this.objCommentGuardados));
+  mostrarDatosComentarios()
+}
+
+function cargarComentarios() {
+  // Cuando cargamos la pagina, si las variables tienen valor, lo ponemos
+  // en el formulario
+  if(localStorage.comentario){
+    var comentarioString = localStorage.getItem('comentario')
+    var comentarios = JSON.parse(comentarioString)
+
+    var publicaciones = document.getElementsByClassName('publicacion')
+    for (var j = 0; j < publicaciones.length; j++) {
+      for (var i = 0; i < comentarios.length; i++) {
+        if (publicaciones[j].getAttribute('id')==comentarios[i].tituloPubli) {
+          //CARGAR COMENTARIO
+          crearComentarioGuardado(j,publicaciones[j],comentarios[i].tituloPubli,comentarios[i].comentario)
+        }
+      }
+    }
+  }
+}
+
+// **************************************************************************
+// **************************************************************************
+// **************************************************************************
+
 function limpiarTextArea() {
   var textAreas = document.getElementsByClassName('area')
   for (var i = 0; i < textAreas.length; i++) {
@@ -17,12 +252,12 @@ function limpiarTextArea() {
 
 function agregarComentario() {
   var comentarios = document.getElementsByClassName('area')
-  console.log("comentarios(area)"+comentarios);
   for (var i = 0; i < comentarios.length; i++) {
     if (comentarios[i].value.length!=0) {
       var comentario = comentarios[i].value
       var contenedorComentario = document.getElementsByClassName('contenedorComentarios')[i]
-      console.log("contenedorComentarios"+contenedorComentarios);
+      var publicacion = document.getElementsByClassName('publicacion')[i]
+      var titulo = publicacion.getAttribute('id')
     }
   }
 
@@ -52,6 +287,7 @@ function agregarComentario() {
   estructuraComentario.appendChild(filaComentario)
 
   limpiarTextArea()
+  guardarComentarios(comentario,publicacion,titulo)
 
 }
 
@@ -65,6 +301,7 @@ function agregarPublicacion(evt) {
   var publicacionNueva=document.createElement("div")
   //le agregamos un className al div creado
   publicacionNueva.className="row columns publicacion"
+  publicacionNueva.id=titulo
   //lo añadimos al contenedor
   document.getElementById("container-publicaciones").appendChild(publicacionNueva)
   //creamos un titulo
@@ -77,7 +314,7 @@ function agregarPublicacion(evt) {
   // Insertamos la imagen
   var imgNueva=document.createElement("img")
   imgNueva.setAttribute("src",imgSubida.result)
-
+  foto = imgSubida.result
   //creamos un salto en blanco
   var saltoEnBlanco = document.createElement("br")
 
@@ -144,6 +381,7 @@ function agregarPublicacion(evt) {
   publicacionNueva.appendChild(contenedorComentarios)
 
 
+  guardarPublicaciones(titulo,fecha,foto,descripcion)
 
 }
 
@@ -158,7 +396,6 @@ function publicarNuevaPublicacion() {
   containerNuevaPublicacion.className = "container-nueva-publicacion hide"
 
   agregarPublicacion()
-
 }
 
 
@@ -199,3 +436,14 @@ function archivo(evt) {
 }
 
 document.getElementById('files').addEventListener('change', archivo, false);
+
+
+
+
+window.onload=function()
+{
+  // Cada vez que se inicia el navegador, mostramos los datos de
+  // la base de datos.
+  cargarPublicaciones();
+
+}

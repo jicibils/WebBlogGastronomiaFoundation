@@ -92,7 +92,7 @@
         </div>
 
         <div class="large-9 medium-9 small-12 columns container-publicaciones" id="container-publicaciones">
-          <div class="row columns publicacion">
+          <div class="row columns publicacion" id="Asado">
             <h1>Asado</h1>
             <time>2018-02-19</time>
             <img src="img/asado.jpg" alt="">
@@ -137,7 +137,7 @@
           </div>
 
 
-          <div class="row columns publicacion">
+          <div class="row columns publicacion" id="Sushi">
             <h1>Sushi</h1>
             <time>2018-01-15</time>
             <img src="img/sushi.jpg" alt="">
@@ -184,7 +184,7 @@
           </div>
 
 
-          <div class="row columns publicacion">
+          <div class="row columns publicacion" id="Platos Gourmet" >
             <h1>Platos Gourmet</h1>
             <time>2017-07-26</time>
             <img src="img/gourmet.jpg" alt="">
@@ -248,7 +248,8 @@
 
       <div class="large-9 medium-9 small-12 columns contenedorPubli">
         <div class="row columns publicacion">
-          <form id="form" >
+          <form id="form">
+          <!-- <form id="form" method="post" action="registra.php"> -->
             <div class="row column container-titulo">
               <label>Titulo:
                 <input id="titulo" type="text" name="titulo" placeholder="Escriba el titulo de la publicacion">
@@ -263,12 +264,13 @@
             <output id="list"></output>
             <div class="row columns">
               <div class="comment-wrapper">
-                <textarea id="descripcion" class="descrNuevaPubli " placeholder="Escriba La Descripcion De La Publicacion"></textarea>
+                <textarea id="descripcion" class="descrNuevaPubli " name="descripcion" placeholder="Escriba La Descripcion De La Publicacion"></textarea>
               </div>
             </div>
             <div class="row columns">
               <div class="row columns boton-class">
                 <a href="#" class="button  alert" id="btnPublicarNuevaPublicacion"><i class="step fi-pencil"></i>Publicar</a>
+                <!-- <input type="submit" id="btnPublicarNuevaPublicacion" class="button  alert" value="Publicar" name="B1"> -->
               </div>
             </div>
           </form>
