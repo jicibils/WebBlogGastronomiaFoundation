@@ -20,7 +20,7 @@ function mostrarDatosPublicaciones() {
 }
 
 function crearPublicacionGuardada(publicacion) {
-  var titulo = publicacion.tituloPubli
+  var titulo = publicacion.titulo
   var fecha = publicacion.fecha
   var descripcion = publicacion.descripcion
   var foto = publicacion.foto
@@ -112,46 +112,6 @@ function crearPublicacionGuardada(publicacion) {
 
 }
 
-function guardarPublicaciones(titulo,fecha,foto,descripcion) {
-  // Guardamos las publicaciones en la base de datos del navegador
-  this.objPublicacionesGuardadas = []
-  // Guardamos la publicacion
-  objPublicacion = {
-    "tituloPubli" : titulo,
-    "fecha" : fecha,
-    "foto" : foto,
-    "descripcion" : descripcion
-  }
-  objPublicacion.tituloPubli = titulo
-  objPublicacion.fecha = fecha
-  objPublicacion.foto = foto
-  objPublicacion.descripcion = descripcion
-
-
-  if (localStorage.publicacion) {
-    var publicacionString = localStorage.getItem('publicacion')
-    var publicaciones = JSON.parse(publicacionString)
-    this.objPublicacionesGuardadas = publicaciones
-  }
-
-  this.objPublicacionesGuardadas.push(objPublicacion)
-  localStorage.setItem("publicacion", JSON.stringify(this.objPublicacionesGuardadas));
-  mostrarDatosPublicaciones()
-}
-
-function cargarPublicaciones() {
-  // Cuando cargamos la pagina, si las variables tienen valor, lo ponemos
-  // en el formulario
-  if(localStorage.publicacion){
-    var publicacionString = localStorage.getItem('publicacion')
-    var publicaciones = JSON.parse(publicacionString)
-
-    for (var i = 0; i < publicaciones.length; i++) {
-      crearPublicacionGuardada(publicaciones[i])
-    }
-  }
-  cargarComentarios();
-}
 
 // **************************************************************************
 // *****************************COMENTARIOS**********************************
@@ -197,44 +157,24 @@ function crearComentarioGuardado(indicePubli,publicacion,tituloCom,comment) {
 
 
 function guardarComentarios(comentario,publicacion,titulo) {
-  this.objCommentGuardados = []
-  // Guardamos el comentario
-  objComment = {
-    "tituloPubli" : titulo,
-    "publicacion" : publicacion,
-    "comentario" : comentario
-  }
-  objComment.tituloPubli = titulo
-  objComment.publicacion = publicacion
-  objComment.comentario = comentario
 
+  $.ajax({
+    url:"registraComentarios.php",
+    type:"POST",
+    data:{"comentario":comentario,"tituloPubli":titulo},
+    success: function(data) {
 
-  if (localStorage.comentario) {
-    var comentarioString = localStorage.getItem('comentario')
-    var comentarios = JSON.parse(comentarioString)
-    this.objCommentGuardados = comentarios
-  }
-
-  this.objCommentGuardados.push(objComment)
-  localStorage.setItem("comentario", JSON.stringify(this.objCommentGuardados));
-  mostrarDatosComentarios()
+    }
+  })
 }
 
-function cargarComentarios() {
-  // Cuando cargamos la pagina, si las variables tienen valor, lo ponemos
-  // en el formulario
-  if(localStorage.comentario){
-    var comentarioString = localStorage.getItem('comentario')
-    var comentarios = JSON.parse(comentarioString)
+function cargarComentarios(comentarioObj) {
 
-    var publicaciones = document.getElementsByClassName('publicacion')
-    for (var j = 0; j < publicaciones.length; j++) {
-      for (var i = 0; i < comentarios.length; i++) {
-        if (publicaciones[j].getAttribute('id')==comentarios[i].tituloPubli) {
-          //CARGAR COMENTARIO
-          crearComentarioGuardado(j,publicaciones[j],comentarios[i].tituloPubli,comentarios[i].comentario)
-        }
-      }
+  var publicaciones = document.getElementsByClassName('publicacion')
+  for (var j = 0; j < publicaciones.length; j++) {
+    if (publicaciones[j].getAttribute('id')==comentarioObj.tituloPubli) {
+      //CARGAR COMENTARIO
+      crearComentarioGuardado(j,publicaciones[j],comentarioObj.tituloPubli,comentarioObj.comentario)
     }
   }
 }
@@ -394,8 +334,22 @@ function escribirNuevaPublicacion() {
 function publicarNuevaPublicacion() {
   containerMain.className = "container-main "
   containerNuevaPublicacion.className = "container-nueva-publicacion hide"
+  var titulo = document.getElementById('titulo').value
+  var descripcion = document.getElementById('descripcion').value
+  var foto = imgSubida.result
+
+  $.ajax({
+    url:"registraPublicaciones.php",
+    type:"POST",
+    data:{"titulo":titulo,"descripcion":descripcion,"foto":foto},
+    success: function(data) {
+
+    }
+  })
 
   agregarPublicacion()
+
+
 }
 
 
@@ -437,13 +391,41 @@ function archivo(evt) {
 
 document.getElementById('files').addEventListener('change', archivo, false);
 
+function recuperarComentarios() {
+  $.ajax({
+    url:"recuperarComentarios.php",
+    type:"GET",
+    data:{},
+    success: function(resultado) {
+      var response = JSON.parse(resultado)
+      for (var i = 0; i < response.length; i++) {
+        var comentario = JSON.parse(response[i])
+        cargarComentarios(comentario)
+      }
+    }
+  })
+}
 
-
-
-window.onload=function()
-{
+function recuperarPublicaciones() {
   // Cada vez que se inicia el navegador, mostramos los datos de
   // la base de datos.
-  cargarPublicaciones();
+  $.ajax({
+    url:"recuperarPublicaciones.php",
+    type:"GET",
+    data:{},
+    success: function(resultado) {
+      var response = JSON.parse(resultado)
+      for (var i = 0; i < response.length; i++) {
+        var publicacion = JSON.parse(response[i])
+        crearPublicacionGuardada(publicacion)
+      }
+      recuperarComentarios()
+    }
+  })
+}
+
+
+window.onload=function(){
+  recuperarPublicaciones()
 
 }
