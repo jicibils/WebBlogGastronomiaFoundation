@@ -17,8 +17,6 @@ if (!$connect_db) {
     exit;
 }
 
-// echo "Success: A proper connection to MySQL was made! The my_db database is great." . PHP_EOL;
-// echo "Host information: " . mysqli_get_host_info($connect_db) . PHP_EOL;
 
 // Recibimos por POST los datos procedentes del formulario
 
@@ -44,17 +42,8 @@ if (!$resultado = $connect_db->query($sql)) {
     echo "Errno: " . $connect_db->errno . "\n";
     echo "Error: " . $connect_db->error . "\n";
     exit;
-}else {
-  // Confirmamos que el registro ha sido insertado con exito
-  // echo "INSERTADO CON EXITO";
 }
 
 mysqli_close($connect_db);
 
-
-//en vez que vuelva atras que publique y luego vuelva a la pagina principal
-// echo "
-//
-// <p><a href='javascript:agregarPublicacion'>VOLVER ATRÁS</a></p>
-// ";
 ?>

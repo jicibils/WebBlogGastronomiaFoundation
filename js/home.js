@@ -156,17 +156,6 @@ function crearComentarioGuardado(indicePubli,publicacion,tituloCom,comment) {
 }
 
 
-function guardarComentarios(comentario,publicacion,titulo) {
-
-  $.ajax({
-    url:"registraComentarios.php",
-    type:"POST",
-    data:{"comentario":comentario,"tituloPubli":titulo},
-    success: function(data) {
-
-    }
-  })
-}
 
 function cargarComentarios(comentarioObj) {
 
@@ -321,7 +310,6 @@ function agregarPublicacion(evt) {
   publicacionNueva.appendChild(contenedorComentarios)
 
 
-  guardarPublicaciones(titulo,fecha,foto,descripcion)
 
 }
 
@@ -331,26 +319,6 @@ function escribirNuevaPublicacion() {
 
 }
 
-function publicarNuevaPublicacion() {
-  containerMain.className = "container-main "
-  containerNuevaPublicacion.className = "container-nueva-publicacion hide"
-  var titulo = document.getElementById('titulo').value
-  var descripcion = document.getElementById('descripcion').value
-  var foto = imgSubida.result
-
-  $.ajax({
-    url:"registraPublicaciones.php",
-    type:"POST",
-    data:{"titulo":titulo,"descripcion":descripcion,"foto":foto},
-    success: function(data) {
-
-    }
-  })
-
-  agregarPublicacion()
-
-
-}
 
 
 btnNuevaPublicacion.addEventListener('click', function(e) {
@@ -390,42 +358,3 @@ function archivo(evt) {
 }
 
 document.getElementById('files').addEventListener('change', archivo, false);
-
-function recuperarComentarios() {
-  $.ajax({
-    url:"recuperarComentarios.php",
-    type:"GET",
-    data:{},
-    success: function(resultado) {
-      var response = JSON.parse(resultado)
-      for (var i = 0; i < response.length; i++) {
-        var comentario = JSON.parse(response[i])
-        cargarComentarios(comentario)
-      }
-    }
-  })
-}
-
-function recuperarPublicaciones() {
-  // Cada vez que se inicia el navegador, mostramos los datos de
-  // la base de datos.
-  $.ajax({
-    url:"recuperarPublicaciones.php",
-    type:"GET",
-    data:{},
-    success: function(resultado) {
-      var response = JSON.parse(resultado)
-      for (var i = 0; i < response.length; i++) {
-        var publicacion = JSON.parse(response[i])
-        crearPublicacionGuardada(publicacion)
-      }
-      recuperarComentarios()
-    }
-  })
-}
-
-
-window.onload=function(){
-  recuperarPublicaciones()
-
-}

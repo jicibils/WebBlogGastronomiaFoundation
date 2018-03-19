@@ -17,9 +17,6 @@ if (!$connect_db) {
     exit;
 }
 
-// echo "Success: A proper connection to MySQL was made! The my_db database is great." . PHP_EOL;
-// echo "Host information: " . mysqli_get_host_info($connect_db) . PHP_EOL;
-
 // Recibimos por POST los datos procedentes del formulario
 
 $comentario = $_POST["comentario"];
@@ -32,23 +29,14 @@ if (!$resultado = $connect_db->query($sql)) {
     // ¡Oh, no! La consulta falló.
     echo "Lo sentimos, este sitio web está experimentando problemas.";
 
-    // cómo obtener información del error
     echo "Error: La ejecución de la consulta falló debido a: \n";
     echo "Query: " . $sql . "\n";
     echo "Errno: " . $connect_db->errno . "\n";
     echo "Error: " . $connect_db->error . "\n";
     exit;
-}else {
-  // Confirmamos que el registro ha sido insertado con exito
-  // echo "INSERTADO CON EXITO";
 }
 
 mysqli_close($connect_db);
 
 
-//en vez que vuelva atras que publique y luego vuelva a la pagina principal
-// echo "
-//
-// <p><a href='javascript:agregarPublicacion'>VOLVER ATRÁS</a></p>
-// ";
 ?>
